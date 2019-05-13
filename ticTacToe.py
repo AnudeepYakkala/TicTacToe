@@ -93,32 +93,35 @@ class ticTacToe:
         self.make_move(self.board, best_move[1], player)
 
 
-game = ticTacToe()
-board = game.get_board()
+if __name__ == '__main__':
+    game = ticTacToe()
+    board = game.get_board()
 
-while not game.game_over(board):
+    while not game.game_over(board):
+        board = game.get_board()
+        game.print_board()
+        person_move = int(input("You are X, Choose where you want to place your move.\n"))
+        while not (person_move in game.avaliable_moves(board)):
+            person_move = int(input("That is not a possible move. Please try again.\n"))
+        game.make_move(board, person_move, "X")
+
+        if game.game_over(board):
+            break
+        board = game.get_board()
+        game.print_board()
+        print("AI choosing move...")
+        game.make_best_move(board, "O")
+
+        if game.game_over(board):
+            break
+
     board = game.get_board()
     game.print_board()
-    person_move = int(input("You are X, Choose where you want to place your move.\n"))
-    while not (person_move in game.avaliable_moves(board)):
-        person_move = int(input("That is not a possible move. Please try again.\n"))
-    game.make_move(board, person_move, "X")
+    if game.has_won(board, "X"):
+        print("You Win!")
+    elif game.has_won(board, "O"):
+        print("You Lost")
+    else:
+        print("Tie!")
 
-    if game.game_over(board):
-        break
-    board = game.get_board()
-    game.print_board()
-    print("AI choosing move...")
-    game.make_best_move(board, "O")
 
-    if game.game_over(board):
-        break
-
-board = game.get_board()
-game.print_board()
-if game.has_won(board, "X"):
-    print("You Win!")
-elif game.has_won(board, "O"):
-    print("You Lost")
-else:
-    print("Tie!")
